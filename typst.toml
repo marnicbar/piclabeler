@@ -2,7 +2,7 @@
 name = "piclabeler"
 version = "0.1.0"
 entrypoint = "lib.typ"
-authors = ["Marius Bär <@marnicbar">]
+authors = ["Marius Bär <@marnicbar>"]
 license = "MIT"
 description = "Annotate images with labels and arrows"
 categories = ["visualization"]
