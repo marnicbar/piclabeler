@@ -22,8 +22,8 @@
   from,
   to,
   origin,
-  stroke: black + 0.5pt,
-  origin-stroke: black + 1.5pt,
+  stroke: luma(40%) + 0.5pt,
+  origin-stroke: black + 1pt,
   halo-width: 0.25pt,
 ) = {
   import cetz.draw: content, get-ctx, line, rect
@@ -82,7 +82,7 @@
     }
 
     // Semitransparent hollow-rectangle label background
-    let bg = white.transparentize(30%)
+    let bg = white.transparentize(40%)
     rect((from-x, from-y), (from-x + y-col-w, to-y), fill: bg, stroke: none)
     rect((to-x - y-col-w, from-y), (to-x, to-y), fill: bg, stroke: none)
     if from-x + y-col-w < to-x - y-col-w {
@@ -99,12 +99,11 @@
       content((x, to-y - x-row-h / 2), text(str(val)), anchor: "center")
     }
 
-    // y-axis labels — skip any that overlap the x-row strips
-    // Left column: right-aligned; right column: left-aligned
+    // y-axis labels — skip any that overflow the canvas
     for (y, val) in y-range.values.zip(y-range.steps) {
       let lh = measure(text(str(val))).height / unit
-      if y - lh / 2 < from-y + x-row-h { continue }
-      if y + lh / 2 > to-y - x-row-h { continue }
+      if y - lh / 2 < from-y { continue }
+      if y + lh / 2 > to-y  { continue }
       content((from-x + y-col-w - pad, y), text(str(val)), anchor: "east")
       content((to-x - pad, y), text(str(val)), anchor: "east")
     }
@@ -124,7 +123,7 @@
 }
 
 #let annotated-image(
-  source,
+  image,
   body,
   grid: false,
   width: auto,
@@ -149,9 +148,9 @@
       // Use name with underscore to avoid collision with grid function from CeTZ
       let _grid = grid
 
-      let img-raw-size = measure(source)
-      let max-img-width = max-length(image_width, size.width, img-raw-size.width)
-      let max-img-height = max-length(image_height, size.height, img-raw-size.height)
+      let img-raw-size = measure(image)
+      let max-img-width = max-length(image_width, img-raw-size.width, size.width)
+      let max-img-height = max-length(image_height, img-raw-size.height, size.height)
 
       let width-driven-img-scale = max-img-width / img-raw-size.width
       let height-driven-img-scale = max-img-height / img-raw-size.height
@@ -162,14 +161,14 @@
         img = scale(
           reflow: true,
           width-driven-img-scale * 100%,
-          source,
+          image,
         )
       } // Height constrained
       else {
         img = scale(
           reflow: true,
           height-driven-img-scale * 100%,
-          source,
+          image,
         )
       }
 
