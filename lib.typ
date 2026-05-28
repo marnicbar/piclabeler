@@ -205,14 +205,17 @@
               name: "bounding_box",
             )
 
-            content(
+            // Layers (low draws first): image (0) < grid (2) < body (4).
+            // Code order can't express this since the grid must come after the
+            // content group to resolve its bounding-box anchors.
+            on-layer(0, content(
               image_pos,
               anchor: image_anchor,
               name: "image",
               img,
-            )
+            ))
 
-            group(ctx => {
+            on-layer(4, group(ctx => {
               let (_, center, north_east) = cetz.coordinate.resolve(ctx, "image.center", "image.north-east")
 
               let delta = cetz.vector.sub(north_east, center)
@@ -223,10 +226,10 @@
               )
 
               body
-            })
+            }))
           })
           if _grid != none {
-            origin-grid("content.south-west", "content.north-east", rebase-coord(origin_pos, "content"))
+            on-layer(2, origin-grid("content.south-west", "content.north-east", rebase-coord(origin_pos, "content")))
           }
         },
       )
