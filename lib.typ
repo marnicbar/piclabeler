@@ -125,7 +125,7 @@
 #let annotated-image(
   image,
   body,
-  grid: false,
+  grid: auto,
   width: auto,
   height: auto,
   image_width: auto,
@@ -225,7 +225,7 @@
               body
             })
           })
-          if (_grid) {
+          if _grid != none {
             origin-grid("content.south-west", "content.north-east", rebase-coord(origin_pos, "content"))
           }
         },
