@@ -2,15 +2,15 @@
 
 /// Draw a label with optional arrows inside an annotated image.
 ///
-/// - body (str, content): What is written in the label
+/// - body (str, content): What is written in the label.
 /// - position (coordinate): Where to place the label
-///   to the origin of the annotated image
-/// - anchor (str): Which part of the label sits on `position`. Defaults to "center"
-/// - frame (none, str): Border around the label: `none`, `"rect"` or `"circle"`
-/// - fill (none, color): Fill of the frame
-/// - stroke (none, stroke): Stroke of the frame
-/// - padding (number, dictionary): Spacing between the text and the frame
-/// - to (none, coordinate, array): If given, an arrow is drawn from the label
+///   to the origin of the annotated image.
+/// - anchor (str): Which part of the label sits on `position`. Defaults to "center".
+/// - frame (none, str): Border around the label: `none`, `"rect"` or `"circle"`.
+/// - fill (none, color): Fill of the frame.
+/// - stroke (none, stroke): Stroke of the frame.
+/// - padding (number, dictionary): Spacing between the text and the frame.
+/// - to (none, coordinate, array): If given, an arrow is drawn from the label.
 ///   border to this position. Pass an array of coordinates to draw several arrows
 ///   from the same label.
 /// - tip (none, str, dictionary): Arrow tip. A mark symbol (e.g. `">"`, `"stealth"`,

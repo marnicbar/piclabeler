@@ -1,6 +1,12 @@
 #import "cetz.typ": *
 #import "label.typ": label
 
+/// Rebase a coordinate onto a named element so it resolves relative to it.
+///
+/// - coordinate (coordinate): A CeTZ coordinate. A bare string anchor or a
+///   relative `(..., to: <str>)` dictionary is prefixed with `base`; anything
+///   else is returned unchanged.
+/// - base (str): Name of the element to rebase onto.
 #let rebase-coord(
   coordinate,
   base,
@@ -18,6 +24,15 @@
   }
 }
 
+/// Draw a unit grid with axis labels spanning a rectangular region.
+///
+/// - from (coordinate): Lower-left corner of the region.
+/// - to (coordinate): Upper-right corner of the region.
+/// - origin (coordinate): Grid origin.
+/// - stroke (stroke): Stroke of the regular gridlines.
+/// - origin-stroke (stroke): Stroke of the gridlines through the origin.
+/// - halo-width (none, length): White halo drawn behind each gridline for
+///   contrast. `none` disables it.
 #let origin-grid(
   from,
   to,
@@ -110,7 +125,13 @@
   })
 }
 
-#let max-length(img-len, default-img-len, max-block-len) = {
+/// Resolve the on-canvas length of the image along one dimension.
+///
+/// - img-len (auto, ratio, length): Requested length. `auto` fits to the block,
+///   a ratio scales the block, a length is capped to the block.
+/// - default-img-len (length): The image's raw (unscaled) length.
+/// - max-block-len (length): Available length in the enclosing block.
+#let max-img-length(img-len, default-img-len, max-block-len) = {
   let len
   if type(img-len) == type(auto) {
     len = calc.min(default-img-len, max-block-len)
@@ -122,6 +143,29 @@
   len
 }
 
+/// Place an image on a CeTZ canvas with a guiding grid and add annotations through `body`.
+///
+/// - image (content): The image to annotate.
+/// - body (content): CeTZ drawing commands (e.g. `label`) drawn over the image.
+/// - grid (none, auto): Whether to draw the coordinate grid.
+/// - padding (none, number, dictionary): Padding around the canvas. See CeTZ
+///   `canvas`.
+/// - width (auto, length): Width of the enclosing block.
+/// - height (auto, length): Height of the enclosing block.
+/// - image-width (auto, ratio, length): Image width. If `auto`, the image is
+///   scaled to fit the block. If a ratio, the image is scaled to that fraction of
+///   the block width. If a length, the image is scaled to that width but capped
+///   at the block width.
+/// - image-height (auto, ratio, length): Image height. If `auto`, the image is
+///   scaled to fit the block. If a ratio, the image is scaled to that fraction of
+///   the block height. If a length, the image is scaled to that height but capped
+///   at the block height.
+/// - image-pos (coordinate): Where to place the image on the canvas.
+/// - image-anchor (str): Which part of the image sits on `image-pos`.
+/// - origin-pos (coordinate): Origin of the grid.
+/// - n-cells (dictionary): Number of grid cells along a axis, defined as a
+///   dictionary with keys `x` and `y`. One of the two must be `auto`. The
+///   other is calculated to form a square grid.
 #let annotated-image(
   image,
   body,
@@ -150,8 +194,8 @@
       let _grid = grid
 
       let img-raw-size = measure(image)
-      let max-img-width = max-length(image-width, img-raw-size.width, size.width)
-      let max-img-height = max-length(image-height, img-raw-size.height, size.height)
+      let max-img-width = max-img-length(image-width, img-raw-size.width, size.width)
+      let max-img-height = max-img-length(image-height, img-raw-size.height, size.height)
 
       let width-driven-img-scale = max-img-width / img-raw-size.width
       let height-driven-img-scale = max-img-height / img-raw-size.height
