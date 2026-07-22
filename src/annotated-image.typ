@@ -1,6 +1,5 @@
-#import "@preview/cetz:0.5.2"
+#import "cetz.typ": *
 #import "label.typ": label
-
 
 #let rebase-coord(
   coordinate,
