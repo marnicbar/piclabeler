@@ -1,7 +1,7 @@
 [package]
 name = "piclabeler"
 version = "0.1.0"
-entrypoint = "piclabeler.typ"
+entrypoint = "src/piclabeler.typ"
 authors = ["Marius Bär <@marnicbar>"]
 license = "MIT"
 description = "Annotate images with labels and arrows"

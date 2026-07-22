@@ -201,7 +201,7 @@
       let height-driven-img-scale = max-img-height / img-raw-size.height
 
       let img
-      // // Width constrained
+      // Width constrained
       if width-driven-img-scale <= height-driven-img-scale {
         img = scale(
           reflow: true,
@@ -263,8 +263,6 @@
 
             on-layer(4, group(ctx => {
               let (_, center, north-east) = cetz.coordinate.resolve(ctx, "image.center", "image.north-east")
-
-              let delta = cetz.vector.sub(north-east, center)
 
               set-viewport(
                 origin-pos,
