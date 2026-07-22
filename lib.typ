@@ -104,7 +104,7 @@
     for (y, val) in y-range.values.zip(y-range.steps) {
       let lh = measure(text(str(val))).height / unit
       if y - lh / 2 < from-y { continue }
-      if y + lh / 2 > to-y  { continue }
+      if y + lh / 2 > to-y { continue }
       content((from-x + y-col-w - pad, y), text(str(val)), anchor: "east")
       content((to-x - pad, y), text(str(val)), anchor: "east")
     }
@@ -130,12 +130,12 @@
   padding: none,
   width: auto,
   height: auto,
-  image_width: auto,
-  image_height: auto,
-  image_pos: (rel: (0, 0), to: "bounding_box.center"),
-  image_anchor: "center",
-  origin_pos: "image.center",
-  n_cells: (x: auto, y: 10),
+  image-width: auto,
+  image-height: auto,
+  image-pos: (rel: (0, 0), to: "bounding-box.center"),
+  image-anchor: "center",
+  origin-pos: "image.center",
+  n-cells: (x: auto, y: 10),
 ) = {
   block(
     clip: true,
@@ -143,7 +143,7 @@
     height: height,
     layout(size => context {
       assert(
-        n_cells.values().filter(x => x == auto).len() == 1,
+        n-cells.values().filter(x => x == auto).len() == 1,
         message: "The grid division must be defined for exactly one dimension.",
       )
 
@@ -151,8 +151,8 @@
       let _grid = grid
 
       let img-raw-size = measure(image)
-      let max-img-width = max-length(image_width, img-raw-size.width, size.width)
-      let max-img-height = max-length(image_height, img-raw-size.height, size.height)
+      let max-img-width = max-length(image-width, img-raw-size.width, size.width)
+      let max-img-height = max-length(image-height, img-raw-size.height, size.height)
 
       let width-driven-img-scale = max-img-width / img-raw-size.width
       let height-driven-img-scale = max-img-height / img-raw-size.height
@@ -174,24 +174,24 @@
         )
       }
 
-      let len = if n_cells.x != auto {
-        measure(img).width / n_cells.x
+      let len = if n-cells.x != auto {
+        measure(img).width / n-cells.x
       } else {
-        measure(img).height / n_cells.y
+        measure(img).height / n-cells.y
       }
 
       let eps = 0.001
-      let bounding_box = (
+      let bounding-box = (
         from: (-eps, -eps),
         to: (eps, eps),
       )
       if width != auto {
-        bounding_box.from.at(0) = -size.width / 2
-        bounding_box.to.at(0) = size.width / 2
+        bounding-box.from.at(0) = -size.width / 2
+        bounding-box.to.at(0) = size.width / 2
       }
       if height != auto {
-        bounding_box.from.at(1) = -size.height / 2
-        bounding_box.to.at(1) = size.height / 2
+        bounding-box.from.at(1) = -size.height / 2
+        bounding-box.to.at(1) = size.height / 2
       }
 
       cetz.canvas(
@@ -202,37 +202,37 @@
 
           group(name: "content", {
             rect(
-              bounding_box.from,
-              bounding_box.to,
+              bounding-box.from,
+              bounding-box.to,
               stroke: none,
-              name: "bounding_box",
+              name: "bounding-box",
             )
 
             // Layers (low draws first): image (0) < grid (2) < body (4).
             // Code order can't express this since the grid must come after the
             // content group to resolve its bounding-box anchors.
             on-layer(0, content(
-              image_pos,
-              anchor: image_anchor,
+              image-pos,
+              anchor: image-anchor,
               name: "image",
               img,
             ))
 
             on-layer(4, group(ctx => {
-              let (_, center, north_east) = cetz.coordinate.resolve(ctx, "image.center", "image.north-east")
+              let (_, center, north-east) = cetz.coordinate.resolve(ctx, "image.center", "image.north-east")
 
-              let delta = cetz.vector.sub(north_east, center)
+              let delta = cetz.vector.sub(north-east, center)
 
               set-viewport(
-                origin_pos,
-                (rel: (1, 1), to: origin_pos),
+                origin-pos,
+                (rel: (1, 1), to: origin-pos),
               )
 
               body
             }))
           })
           if _grid != none {
-            on-layer(2, origin-grid("content.south-west", "content.north-east", rebase-coord(origin_pos, "content")))
+            on-layer(2, origin-grid("content.south-west", "content.north-east", rebase-coord(origin-pos, "content")))
           }
         },
       )
