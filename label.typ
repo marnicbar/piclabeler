@@ -26,20 +26,13 @@
   stroke: black + 1pt,
   padding: 0.2em,
   to: none,
-  tip: none,
+  mark: none,
   arrow-stroke: auto,
   name: none,
 ) = {
   import cetz.draw: content, group, line
 
   let arrow-stroke = if arrow-stroke == auto { stroke } else { arrow-stroke }
-  let mark = if tip == none {
-    none
-  } else if type(tip) == dictionary {
-    tip
-  } else {
-    (end: tip)
-  }
 
   group(
     name: name,
