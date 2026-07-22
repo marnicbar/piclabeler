@@ -127,6 +127,7 @@
   image,
   body,
   grid: auto,
+  padding: none,
   width: auto,
   height: auto,
   image_width: auto,
@@ -195,6 +196,7 @@
 
       cetz.canvas(
         length: len,
+        padding: padding,
         {
           import cetz.draw: *
 
