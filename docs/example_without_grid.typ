@@ -1,4 +1,4 @@
-#import "@local/piclabeler:0.1.0" as pl
+#import "@preview/piclabeler:0.1.0" as pl
 
 #set page(margin: 2mm, width: auto, height: auto)
 

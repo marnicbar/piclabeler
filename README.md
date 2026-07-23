@@ -8,7 +8,7 @@ It is similar to the LaTeX packages [overpic](https://ctan.org/pkg/overpic) or [
 ## Example
 The following code creates an annotated image with two labels:
 ```typ
-#import "@local/piclabeler:0.1.0" as pl
+#import "@preview/piclabeler:0.1.0" as pl
 
 #pl.annotated-image(
   width: 10cm,
@@ -32,7 +32,7 @@ The following code creates an annotated image with two labels:
 ```
 ![Example annotation with the grid](docs/example_with_grid.svg)
 
-After placing the labels and arrows, the grid can be disable by setting `grid: none`:
+After placing the labels and arrows, the grid can be disabled by setting `grid: none`:
 ```typ
 #pl.annotated-image(
     grid: none,
