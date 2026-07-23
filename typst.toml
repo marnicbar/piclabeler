@@ -8,3 +8,4 @@ description = "Annotate images with labels and arrows."
 repository = "https://github.com/marnicbar/piclabeler"
 keywords = ["annotate", "annotation", "label", "image", "picture"]
 categories = ["visualization"]
+exclude = ["/docs/*"]
