@@ -149,6 +149,7 @@
 /// - body (content): CeTZ drawing commands (e.g. `label`) drawn over the image.
 /// - grid (none, auto): Whether to draw the coordinate grid.
 /// - padding (none, length, relative, dictionary): Padding between the CeTZ canvas and the enclosing block. See `inset` in `block` for details.
+/// - clip (bool): Whether to clip content that overflows the enclosing block.
 /// - width (auto, length): Width of the enclosing block.
 /// - height (auto, length): Height of the enclosing block.
 /// - image-width (auto, ratio, length): Image width. If `auto`, the image is
@@ -170,6 +171,7 @@
   body,
   grid: auto,
   padding: none,
+  clip: true,
   width: auto,
   height: auto,
   image-width: auto,
@@ -180,7 +182,7 @@
   n-cells: (x: auto, y: 10),
 ) = {
   block(
-    clip: true,
+    clip: clip,
     width: width,
     height: height,
     inset: if padding == none { (:) } else { padding },
